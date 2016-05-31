@@ -3,7 +3,7 @@
 #include <glib.h>
 #include <glib/gprintf.h>
 
-//gcc -o UnitConversion2  UnitConversion2.c `pkg-config --libs --cflags gtk+-2.0`
+//gcc -o UnitConversionGTK2  UnitConversionGTK2.c `pkg-config --libs --cflags gtk+-2.0`
 
 typedef struct{
    GtkWidget *combo;
