@@ -5,7 +5,7 @@ was Swing and JavaFX. I used the website https://better-dpt-roll.github.io/ to c
 Currently this is only GTK+ 2 but once I get all the functionality that I want this to have, I'll work on porting it over to
 GKT+3
 
-I'm not the most experienced with C. If there are any erros (memory leaks that I didn't fix, bad programming style/habit, an easier way for me to do something, etc)
+I'm not the most experienced with C. If there are any errors (memory leaks that I didn't fix, bad programming style/habit, an easier way for me to do something,typos, etc)
 don't hesistate to tell me. I want to fix it and learn.
 
 As of Jun 1, 2016, lb -> kgs and vice versa works but I'll be adding in new units
