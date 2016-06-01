@@ -8,7 +8,7 @@ GKT+3
 I'm not the most experienced with C. If there are any erros (memory leaks that I didn't fix, bad programming style/habit, an easier way for me to do something, etc)
 don't hesistate to tell me. I want to fix it and learn.
 
-As of now, it only works from pounds to kg since I just did only one set of conversions so I can work on getting the interface working.
+As of Jun 1, 2016, lb -> kgs and vice versa works but I'll be adding in new units
 
 
 ![Alt Text](http://i.imgur.com/WmUryGz.gif)
@@ -16,4 +16,5 @@ As of now, it only works from pounds to kg since I just did only one set of conv
 + TO DO:
   * Add in other units.
   * Maybe find a better way to convert between units other than a bunch of if statements.
+  * Add a "unit selector" (so you can choose between mass, temp, etc) and the two drop down menus will change accordingly
   * ~~Make it work both ways (enter number into right side and it'll change left side and vice versa).~~
