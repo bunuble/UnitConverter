@@ -11,9 +11,9 @@ don't hesistate to tell me. I want to fix it and learn.
 As of now, it only works from pounds to kg since I just did only one set of conversions so I can work on getting the interface working.
 
 
-![Alt Text](http://i.imgur.com/FKPU2Xo.gif)
+![Alt Text](http://i.imgur.com/WmUryGz.gif)
 
-+ TODO:
++ TO DO:
   * Add in other units.
   * Maybe find a better way to convert between units other than a bunch of if statements.
-  * Make it work both ways (enter number into right side and it'll change left side).
+  * ~~Make it work both ways (enter number into right side and it'll change left side and vice versa).~~
