@@ -18,17 +18,72 @@ void convert(GtkEntry *entry, gpointer user_data){
 	const char* input = gtk_entry_get_text(GTK_ENTRY(data->entry1));
 	int index2 = gtk_combo_box_get_active(GTK_COMBO_BOX(data->combo2));
 	const char* input2 = gtk_entry_get_text(GTK_ENTRY(data->entry2));
-	
-	if(index == 0){
-		if(index2 == 0){
-			gtk_entry_set_text(GTK_ENTRY(data->entry2), input);
+	if(index == index2){
+		gtk_entry_set_text(GTK_ENTRY(data->entry2), input);
+	}
+	else{
+		if(index == 0) /*lbs*/{
+			if(index2 == 1)/*kg*/{
+				double temp = atof(input);
+				temp = temp * 0.44444444;
+				
+				if( abs( temp - atof(input2) ) > .01){
+					gchar* ans =g_strdup_printf ("%.2lf",temp);
+					gtk_entry_set_text(GTK_ENTRY(data->entry2), ans);
+					free(ans);
+				}
+			}
 		}
-		if(index2 == 1){
-			double temp = atof(input);
-			temp = temp * 0.45;
-			gchar* ans =g_strdup_printf ("%.1lf",temp);
-			gtk_entry_set_text(GTK_ENTRY(data->entry2), ans);
-			free(ans);
+		else if(index == 1)/*kg*/{
+			if(index2 == 0)/*lbs*/{
+				double temp = atof(input);
+				temp = temp * 2.25;
+				
+				if( abs( temp - atof(input2) ) > .01){
+					gchar* ans =g_strdup_printf ("%.2lf",temp);
+					gtk_entry_set_text(GTK_ENTRY(data->entry2), ans);
+					free(ans);
+				}
+			
+			}
+		}
+	}
+} 
+
+void convert2(GtkEntry *entry, gpointer user_data){
+	WidgetData *data = (WidgetData *)user_data;
+	int index = gtk_combo_box_get_active(GTK_COMBO_BOX(data->combo));
+	const char* input = gtk_entry_get_text(GTK_ENTRY(data->entry1));
+	int index2 = gtk_combo_box_get_active(GTK_COMBO_BOX(data->combo2));
+	const char* input2 = gtk_entry_get_text(GTK_ENTRY(data->entry2));
+	
+	if(index2 == index){
+		gtk_entry_set_text(GTK_ENTRY(data->entry1), input2);
+	}
+	else{
+		if(index2 == 1) /*kgs*/{
+			if(index == 0) /*lbs*/{
+				double temp = atof(input2);
+				temp = temp * 2.25;
+				
+				if( abs( temp - atof(input) ) > .01){
+					gchar* ans =g_strdup_printf ("%.2lf",temp);
+					gtk_entry_set_text(GTK_ENTRY(data->entry1), ans);
+					free(ans);
+				}
+			}
+		}
+		else if(index2 == 0) /*lbs*/{
+			if(index == 1) /*kgs*/{
+				double temp = atof(input2);
+				temp = temp * 0.44444444;
+				
+				if( abs( temp - atof(input) ) > .01){
+					gchar* ans =g_strdup_printf ("%.2lf",temp);
+					gtk_entry_set_text(GTK_ENTRY(data->entry1), ans);
+					free(ans);
+				}
+			}
 		}
 	}
 } 
@@ -90,7 +145,7 @@ int main(int argc, char *argv[]) {
 	//g_signal_connect(GtkWidget, signal, G_CALLBACK(method it will call), parameters for the method)
 	g_signal_connect(window, "destroy",G_CALLBACK(gtk_main_quit), NULL);  
 	g_signal_connect(DataSet->entry1, "changed", G_CALLBACK(convert), DataSet);
-	
+	g_signal_connect(DataSet->entry2, "changed", G_CALLBACK(convert2), DataSet);
     //flags a widget to be shown
 	gtk_widget_show_all(window);
 	gtk_main();
