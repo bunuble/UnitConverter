@@ -1,4 +1,4 @@
-# UnitConverter
+# Unit Converter
 Just a small project to work on while I learn some GTK stuff. I decided to do this project because my only GUI experience
 was Swing and JavaFX. I used the website https://better-dpt-roll.github.io/ to choose a random project for me.
 
