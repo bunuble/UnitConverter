@@ -121,8 +121,8 @@ int main(int argc, char *argv[]) {
 	//setting the default settings
 	gtk_combo_box_set_active (GTK_COMBO_BOX(DataSet->combo),0);
 	gtk_combo_box_set_active (GTK_COMBO_BOX(DataSet->combo2),1);
-	gtk_entry_set_text(GTK_ENTRY(DataSet->entry1), "2.2");
-	gtk_entry_set_text(GTK_ENTRY(DataSet->entry2), "1.0");
+	gtk_entry_set_text(GTK_ENTRY(DataSet->entry1), "2.25");
+	gtk_entry_set_text(GTK_ENTRY(DataSet->entry2), "1.00");
 	
 	//setting containter border and then adding widgets to containers
 	gtk_container_set_border_width(GTK_CONTAINER(window), 5);
