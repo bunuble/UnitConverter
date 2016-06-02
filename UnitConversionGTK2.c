@@ -27,7 +27,7 @@ void convert(GtkEntry *entry, gpointer user_data){
 		gtk_entry_set_text(GTK_ENTRY(data->entry2), input);
 	}
 	else{
-		if(index == 0) /*lbs*/{
+		if(index == 0 && gtk_combo_box_get_active(GTK_COMBO_BOX(data->mainCombo)) == 0) /*lbs*/{
 			if(index2 == 1)/*kg*/{
 				double temp;
 				if( (input != NULL) && (input[0] == '\0') ){
@@ -46,7 +46,7 @@ void convert(GtkEntry *entry, gpointer user_data){
 				}
 			}
 		}
-		else if(index == 1)/*kg*/{
+		else if(index == 1 && gtk_combo_box_get_active(GTK_COMBO_BOX(data->mainCombo)) == 0)/*kg*/{
 			if(index2 == 0)/*lbs*/{
 				double temp = atof(input);
 				temp = temp * 2.25;
@@ -73,7 +73,7 @@ void convert2(GtkEntry *entry, gpointer user_data){
 		gtk_entry_set_text(GTK_ENTRY(data->entry1), input2);
 	}
 	else{
-		if(index2 == 1) /*kgs*/{
+		if(index2 == 1 && gtk_combo_box_get_active(GTK_COMBO_BOX(data->mainCombo)) == 0) /*kgs*/{
 			if(index == 0) /*lbs*/{
 				double temp = atof(input2);
 				temp = temp * 2.25;
@@ -85,7 +85,7 @@ void convert2(GtkEntry *entry, gpointer user_data){
 				}
 			}
 		}
-		else if(index2 == 0) /*lbs*/{
+		else if(index2 == 0 && gtk_combo_box_get_active(GTK_COMBO_BOX(data->mainCombo)) == 0) /*lbs*/{
 			if(index == 1) /*kgs*/{
 				double temp = atof(input2);
 				temp = temp * 0.44444444;
@@ -111,8 +111,14 @@ void changeType(GtkComboBox *widget, gpointer user_data){
 		
 		gtk_fixed_put(GTK_FIXED(data->container),data->combo2, 140,40);
 		gtk_widget_set_size_request(data->combo2,130,30);
+		
+		gtk_entry_set_text(GTK_ENTRY(data->entry1), "2.25");
+		gtk_entry_set_text(GTK_ENTRY(data->entry2), "1.00");
+		gtk_combo_box_set_active(GTK_COMBO_BOX(data->combo),0);
+		gtk_combo_box_set_active(GTK_COMBO_BOX(data->combo2),1);
+		
 	}
-	else if(gtk_combo_box_get_active(GTK_COMBO_BOX(data->mainCombo)) == 1){
+	else if (gtk_combo_box_get_active(GTK_COMBO_BOX(data->mainCombo)) == 1){
 		gtk_container_remove(GTK_CONTAINER(data->container),data->combo);
 		gtk_container_remove(GTK_CONTAINER(data->container),data->combo2);
 		
@@ -121,6 +127,11 @@ void changeType(GtkComboBox *widget, gpointer user_data){
 		
 		gtk_fixed_put(GTK_FIXED(data->container),data->temp2, 140,40);
 		gtk_widget_set_size_request(data->temp2,130,30);
+		
+		gtk_entry_set_text(GTK_ENTRY(data->entry1), "32");
+		gtk_entry_set_text(GTK_ENTRY(data->entry2), "0");
+		gtk_combo_box_set_active(GTK_COMBO_BOX(data->temp1),0);
+		gtk_combo_box_set_active(GTK_COMBO_BOX(data->temp2),1);
 	}
 }
 
@@ -178,6 +189,13 @@ int main(int argc, char *argv[]) {
 	gtk_container_set_border_width(GTK_CONTAINER(window), 5);
 	gtk_container_add(GTK_CONTAINER(window), DataSet->container);
 	
+	//g_object_ref
+	g_object_ref(DataSet->combo);
+	g_object_ref(DataSet->combo2);
+	g_object_ref(DataSet->temp1);
+	g_object_ref(DataSet->temp2);
+	
+	
 	//adding the widgets to container and setting coordinates
 	//set_size_request is setting minimum size the widget will be
 	gtk_fixed_put(GTK_FIXED(DataSet->container),DataSet->mainCombo, 70, 0);
@@ -186,11 +204,11 @@ int main(int argc, char *argv[]) {
 	gtk_fixed_put(GTK_FIXED(DataSet->container),DataSet->combo, 0, 40);
     gtk_widget_set_size_request(DataSet->combo, 130, 30);
     
-    gtk_fixed_put(GTK_FIXED(DataSet->container),DataSet->entry1,0,80);
-    gtk_widget_set_size_request(DataSet->entry1, 130, 30);
-    
     gtk_fixed_put(GTK_FIXED(DataSet->container),DataSet->combo2, 140,40);
     gtk_widget_set_size_request(DataSet->combo2,130,30);
+    
+    gtk_fixed_put(GTK_FIXED(DataSet->container),DataSet->entry1,0,80);
+    gtk_widget_set_size_request(DataSet->entry1, 130, 30);
     
     gtk_fixed_put(GTK_FIXED(DataSet->container),DataSet->entry2,140,80);
     gtk_widget_set_size_request(DataSet->entry2, 130, 30);
@@ -200,7 +218,10 @@ int main(int argc, char *argv[]) {
 	g_signal_connect(DataSet->entry1, "changed", G_CALLBACK(convert), DataSet);
 	g_signal_connect(DataSet->entry2, "changed", G_CALLBACK(convert2), DataSet);
 	g_signal_connect(DataSet->mainCombo, "changed", G_CALLBACK(changeType), DataSet);
-    //flags a widget to be shown
+    
+    //flags all widget to be shown
+    gtk_widget_show(DataSet->temp1);
+    gtk_widget_show(DataSet->temp2);
 	gtk_widget_show_all(window);
 	gtk_main();
     return 0;
