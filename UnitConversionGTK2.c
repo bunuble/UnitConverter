@@ -62,14 +62,14 @@ void convert(GtkEntry *entry, gpointer user_data){
 		else if(gtk_combo_box_get_active(GTK_COMBO_BOX(data->mainCombo)) == 1)/*Temperature*/{
 			if(index == 0)/*Fahrenheit*/{
 				if(index2 == 1)/*Celcius*/{
-					double temp;
-					if( (input != NULL) && (input[0] == '\0') ){
+					double temp = atof(input);
+					/*if( (input != NULL) && (input[0] == '\0') ){
 						temp =0;
 						gtk_entry_set_text(GTK_ENTRY(data->entry2), "0.00");
 					}
 					else{
 						temp = atof(input);
-					}
+					}*/
 					temp = (temp-32)/1.8;
 					
 					if( abs( temp - atof(input2) ) > .001){
@@ -82,14 +82,14 @@ void convert(GtkEntry *entry, gpointer user_data){
 			}
 			else if(index == 1)/*Celcius*/{
 				if(index2 == 0)/*Fahrenheit*/{
-					double temp;
-					if( (input != NULL) && (input[0] == '\0') ){
+					double temp = atof(input);
+					/*if( (input != NULL) && (input[0] == '\0') ){
 						temp =0;
 						gtk_entry_set_text(GTK_ENTRY(data->entry2), "0.00");
 					}
 					else{
 						temp = atof(input);
-					}
+					}*/
 					temp = temp*1.8+32;
 					
 					if( abs( temp - atof(input2) ) > .001){
