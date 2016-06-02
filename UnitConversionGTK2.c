@@ -11,8 +11,6 @@ typedef struct{
    GtkWidget *mainCombo;
    GtkWidget *entry1;
    GtkWidget *entry2;
-   GtkWidget *temp1;
-   GtkWidget *temp2;
    GtkWidget *container;
 }WidgetData;
 
@@ -103,35 +101,39 @@ void convert2(GtkEntry *entry, gpointer user_data){
 void changeType(GtkComboBox *widget, gpointer user_data){
 	WidgetData *data = (WidgetData *)user_data;
 	if(gtk_combo_box_get_active(GTK_COMBO_BOX(data->mainCombo)) == 0){
-		gtk_container_remove(GTK_CONTAINER(data->container),data->temp1);
-		gtk_container_remove(GTK_CONTAINER(data->container),data->temp2);
+		gtk_combo_box_remove_text (GTK_COMBO_BOX(data->combo),0);
+		gtk_combo_box_remove_text (GTK_COMBO_BOX(data->combo),0);
+		gtk_combo_box_remove_text (GTK_COMBO_BOX(data->combo2),0);
+		gtk_combo_box_remove_text (GTK_COMBO_BOX(data->combo2),0);
 		
-		gtk_fixed_put(GTK_FIXED(data->container),data->combo, 0, 40);
-		gtk_widget_set_size_request(data->combo, 130, 30);
-		
-		gtk_fixed_put(GTK_FIXED(data->container),data->combo2, 140,40);
-		gtk_widget_set_size_request(data->combo2,130,30);
-		
-		gtk_entry_set_text(GTK_ENTRY(data->entry1), "2.25");
-		gtk_entry_set_text(GTK_ENTRY(data->entry2), "1.00");
+		gtk_combo_box_append_text(GTK_COMBO_BOX(data->combo), "Pounds (lbs)");
+		gtk_combo_box_append_text(GTK_COMBO_BOX(data->combo), "Kilograms (kgs)");
+	
+		gtk_combo_box_append_text(GTK_COMBO_BOX(data->combo2), "Pounds (lbs)");
+		gtk_combo_box_append_text(GTK_COMBO_BOX(data->combo2), "Kilograms (kgs)");
+	
 		gtk_combo_box_set_active(GTK_COMBO_BOX(data->combo),0);
 		gtk_combo_box_set_active(GTK_COMBO_BOX(data->combo2),1);
+		gtk_entry_set_text(GTK_ENTRY(data->entry1), "2.25");
+		gtk_entry_set_text(GTK_ENTRY(data->entry2), "1.00");
 		
 	}
 	else if (gtk_combo_box_get_active(GTK_COMBO_BOX(data->mainCombo)) == 1){
-		gtk_container_remove(GTK_CONTAINER(data->container),data->combo);
-		gtk_container_remove(GTK_CONTAINER(data->container),data->combo2);
+		gtk_combo_box_remove_text (GTK_COMBO_BOX(data->combo),0);
+		gtk_combo_box_remove_text (GTK_COMBO_BOX(data->combo),0);
+		gtk_combo_box_remove_text (GTK_COMBO_BOX(data->combo2),0);
+		gtk_combo_box_remove_text (GTK_COMBO_BOX(data->combo2),0);
 		
-		gtk_fixed_put(GTK_FIXED(data->container),data->temp1, 0, 40);
-		gtk_widget_set_size_request(data->temp1, 130, 30);
+		gtk_combo_box_append_text(GTK_COMBO_BOX(data->combo), "Fahrenheit (F)");
+		gtk_combo_box_append_text(GTK_COMBO_BOX(data->combo), "Celcius (C)");
+	
+		gtk_combo_box_append_text(GTK_COMBO_BOX(data->combo2), "Fahrenheit (F)");
+		gtk_combo_box_append_text(GTK_COMBO_BOX(data->combo2), "Celcius (C)");
 		
-		gtk_fixed_put(GTK_FIXED(data->container),data->temp2, 140,40);
-		gtk_widget_set_size_request(data->temp2,130,30);
-		
+		gtk_combo_box_set_active(GTK_COMBO_BOX(data->combo),0);
+		gtk_combo_box_set_active(GTK_COMBO_BOX(data->combo2),1);
 		gtk_entry_set_text(GTK_ENTRY(data->entry1), "32");
 		gtk_entry_set_text(GTK_ENTRY(data->entry2), "0");
-		gtk_combo_box_set_active(GTK_COMBO_BOX(data->temp1),0);
-		gtk_combo_box_set_active(GTK_COMBO_BOX(data->temp2),1);
 	}
 }
 
@@ -144,8 +146,6 @@ int main(int argc, char *argv[]) {
 	GtkWidget *window;
 	DataSet->combo = gtk_combo_box_new_text();
 	DataSet->combo2 = gtk_combo_box_new_text();
-	DataSet->temp1 = gtk_combo_box_new_text();
-	DataSet->temp2 = gtk_combo_box_new_text();
 	DataSet->mainCombo = gtk_combo_box_new_text();
 	DataSet->container = gtk_fixed_new();
 	DataSet->entry1 = gtk_entry_new();
@@ -169,12 +169,6 @@ int main(int argc, char *argv[]) {
 	gtk_combo_box_append_text(GTK_COMBO_BOX(DataSet->combo2), "Pounds (lbs)");
 	gtk_combo_box_append_text(GTK_COMBO_BOX(DataSet->combo2), "Kilograms (kgs)");
 	
-	gtk_combo_box_append_text(GTK_COMBO_BOX(DataSet->temp1), "Fahrenheit (F)");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(DataSet->temp1), "Celcius (C)");
-	
-	gtk_combo_box_append_text(GTK_COMBO_BOX(DataSet->temp2), "Fahrenheit (F)");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(DataSet->temp2), "Celcius (C)");
-	
 	gtk_combo_box_append_text(GTK_COMBO_BOX(DataSet->mainCombo), "Mass");
 	gtk_combo_box_append_text(GTK_COMBO_BOX(DataSet->mainCombo), "Temperature");
 	
@@ -188,13 +182,6 @@ int main(int argc, char *argv[]) {
 	//setting containter border and then adding widgets to containers
 	gtk_container_set_border_width(GTK_CONTAINER(window), 5);
 	gtk_container_add(GTK_CONTAINER(window), DataSet->container);
-	
-	//g_object_ref
-	g_object_ref(DataSet->combo);
-	g_object_ref(DataSet->combo2);
-	g_object_ref(DataSet->temp1);
-	g_object_ref(DataSet->temp2);
-	
 	
 	//adding the widgets to container and setting coordinates
 	//set_size_request is setting minimum size the widget will be
@@ -220,8 +207,6 @@ int main(int argc, char *argv[]) {
 	g_signal_connect(DataSet->mainCombo, "changed", G_CALLBACK(changeType), DataSet);
     
     //flags all widget to be shown
-    gtk_widget_show(DataSet->temp1);
-    gtk_widget_show(DataSet->temp2);
 	gtk_widget_show_all(window);
 	gtk_main();
     return 0;
