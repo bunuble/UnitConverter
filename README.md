@@ -16,5 +16,5 @@ As of Jun 1, 2016, lb -> kgs and vice versa works but I'll be adding in new unit
 + TO DO:
   * Add in other units.
   * Maybe find a better way to convert between units other than a bunch of if statements.
-  * ~~Add a "unit selector" (so you can choose between mass, temp, etc) and the two drop down menus will change accordingly~~ (After completing it, I realized I did it in the most ineffecient way and I could have just changed the titles. I will change this)
+  * ~~Add a "unit selector" (so you can choose between mass, temp, etc) and the two drop down menus will change accordingly~~
   * ~~Make it work both ways (enter number into right side and it'll change left side and vice versa).~~
