@@ -25,36 +25,79 @@ void convert(GtkEntry *entry, gpointer user_data){
 		gtk_entry_set_text(GTK_ENTRY(data->entry2), input);
 	}
 	else{
-		if(index == 0 && gtk_combo_box_get_active(GTK_COMBO_BOX(data->mainCombo)) == 0) /*lbs*/{
-			if(index2 == 1)/*kg*/{
-				double temp;
-				if( (input != NULL) && (input[0] == '\0') ){
-					temp =0;
-					gtk_entry_set_text(GTK_ENTRY(data->entry2), "0.00");
+		if(gtk_combo_box_get_active(GTK_COMBO_BOX(data->mainCombo)) == 0)/*Mass*/{
+			if(index == 0 ) /*lbs*/{
+				if(index2 == 1)/*kg*/{
+					double temp;
+					if( (input != NULL) && (input[0] == '\0') ){
+						temp =0;
+						gtk_entry_set_text(GTK_ENTRY(data->entry2), "0.00");
+					}
+					else{
+						temp = atof(input);
+					}
+					temp = temp * 0.44444444;
+					
+					if( abs( temp - atof(input2) ) > .001){
+						gchar* ans =g_strdup_printf ("%.2lf",temp);
+						gtk_entry_set_text(GTK_ENTRY(data->entry2), ans);
+						free(ans);
+					}
 				}
-				else{
-					temp = atof(input);
-				}
-				temp = temp * 0.44444444;
+			}
+			else if(index == 1 )/*kg*/{
+				if(index2 == 0)/*lbs*/{
+					double temp = atof(input);
+					temp = temp * 2.25;
+					
+					if( abs( temp - atof(input2) ) > .001){
+						gchar* ans =g_strdup_printf ("%.2lf",temp);
+						gtk_entry_set_text(GTK_ENTRY(data->entry2), ans);
+						free(ans);
+					}
 				
-				if( abs( temp - atof(input2) ) > .001){
-					gchar* ans =g_strdup_printf ("%.2lf",temp);
-					gtk_entry_set_text(GTK_ENTRY(data->entry2), ans);
-					free(ans);
 				}
 			}
 		}
-		else if(index == 1 && gtk_combo_box_get_active(GTK_COMBO_BOX(data->mainCombo)) == 0)/*kg*/{
-			if(index2 == 0)/*lbs*/{
-				double temp = atof(input);
-				temp = temp * 2.25;
-				
-				if( abs( temp - atof(input2) ) > .001){
-					gchar* ans =g_strdup_printf ("%.2lf",temp);
-					gtk_entry_set_text(GTK_ENTRY(data->entry2), ans);
-					free(ans);
+		else if(gtk_combo_box_get_active(GTK_COMBO_BOX(data->mainCombo)) == 1)/*Temperature*/{
+			if(index == 0)/*Fahrenheit*/{
+				if(index2 == 1)/*Celcius*/{
+					double temp;
+					if( (input != NULL) && (input[0] == '\0') ){
+						temp =0;
+						gtk_entry_set_text(GTK_ENTRY(data->entry2), "0.00");
+					}
+					else{
+						temp = atof(input);
+					}
+					temp = (temp-32)/1.8;
+					
+					if( abs( temp - atof(input2) ) > .001){
+						gchar* ans =g_strdup_printf ("%.2lf",temp);
+						gtk_entry_set_text(GTK_ENTRY(data->entry2), ans);
+						free(ans);
+					}
 				}
 			
+			}
+			else if(index == 1)/*Celcius*/{
+				if(index2 == 0)/*Fahrenheit*/{
+					double temp;
+					if( (input != NULL) && (input[0] == '\0') ){
+						temp =0;
+						gtk_entry_set_text(GTK_ENTRY(data->entry2), "0.00");
+					}
+					else{
+						temp = atof(input);
+					}
+					temp = temp*1.8+32;
+					
+					if( abs( temp - atof(input2) ) > .001){
+						gchar* ans =g_strdup_printf ("%.2lf",temp);
+						gtk_entry_set_text(GTK_ENTRY(data->entry2), ans);
+						free(ans);
+					}
+				}
 			}
 		}
 	}
@@ -71,27 +114,56 @@ void convert2(GtkEntry *entry, gpointer user_data){
 		gtk_entry_set_text(GTK_ENTRY(data->entry1), input2);
 	}
 	else{
-		if(index2 == 1 && gtk_combo_box_get_active(GTK_COMBO_BOX(data->mainCombo)) == 0) /*kgs*/{
-			if(index == 0) /*lbs*/{
-				double temp = atof(input2);
-				temp = temp * 2.25;
-				
-				if( abs( temp - atof(input) ) > .001){
-					gchar* ans =g_strdup_printf ("%.2lf",temp);
-					gtk_entry_set_text(GTK_ENTRY(data->entry1), ans);
-					free(ans);
+		if(gtk_combo_box_get_active(GTK_COMBO_BOX(data->mainCombo)) == 0)/*mass*/{
+			if(index2 == 1) /*kgs*/{
+				if(index == 0) /*lbs*/{
+					double temp = atof(input2);
+					temp = temp * 2.25;
+					
+					if( abs( temp - atof(input) ) > .001){
+						gchar* ans =g_strdup_printf ("%.2lf",temp);
+						gtk_entry_set_text(GTK_ENTRY(data->entry1), ans);
+						free(ans);
+					}
+				}
+			}
+			else if(index2 == 0) /*lbs*/{
+				if(index == 1) /*kgs*/{
+					double temp = atof(input2);
+					temp = temp * 0.44444444;
+					
+					if( abs( temp - atof(input) ) > .001){
+						gchar* ans =g_strdup_printf ("%.2lf",temp);
+						gtk_entry_set_text(GTK_ENTRY(data->entry1), ans);
+						free(ans);
+					}
 				}
 			}
 		}
-		else if(index2 == 0 && gtk_combo_box_get_active(GTK_COMBO_BOX(data->mainCombo)) == 0) /*lbs*/{
-			if(index == 1) /*kgs*/{
-				double temp = atof(input2);
-				temp = temp * 0.44444444;
-				
-				if( abs( temp - atof(input) ) > .001){
-					gchar* ans =g_strdup_printf ("%.2lf",temp);
-					gtk_entry_set_text(GTK_ENTRY(data->entry1), ans);
-					free(ans);
+		else if(gtk_combo_box_get_active(GTK_COMBO_BOX(data->mainCombo)) == 1)/*Temperature*/{
+			if(index2 == 1)/*Celcius*/{
+				if(index == 0)/*Fahrenheit*/{
+					double temp = atof(input2);
+					temp = temp*1.8+32;
+					
+					if( abs( temp - atof(input) ) > .001){
+						gchar* ans =g_strdup_printf ("%.2lf",temp);
+						gtk_entry_set_text(GTK_ENTRY(data->entry1), ans);
+						free(ans);
+					}
+				}
+			
+			}
+			else if(index2 == 0)/*Fahrenheit*/{
+				if(index == 1)/*Celcius*/{
+					double temp = atof(input2);
+					temp = (temp-32)/1.8;;
+					
+					if( abs( temp - atof(input) ) > .001){
+						gchar* ans =g_strdup_printf ("%.2lf",temp);
+						gtk_entry_set_text(GTK_ENTRY(data->entry1), ans);
+						free(ans);
+					}
 				}
 			}
 		}
